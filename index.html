@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div id="task-container">
+        <h2>Task Manager</h2>
+        <form id="task-form">
+            <label for="task-title">Title:</label>
+            <input type="text" id="task-title" required>
+            <label for="task-description">Description:</label>
+            <textarea id="task-description" rows="4" cols="50"></textarea>
+            <label for="task-status">Status:</label>
+            <select id="task-status" name="task-status">
+                <option value="PENDING">Pending</option>
+                <option value="COMPLETED">Completed</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+    
+        <h3>Tasks:</h3>
+        <ul id="tasks-list">
+            <!-- Task items will be added here dynamically -->
+        </ul>
+    </div>
+    
+    <script>
+        
+    </script>
+</body>
+</html>
