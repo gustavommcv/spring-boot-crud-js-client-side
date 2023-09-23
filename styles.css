@@ -54,23 +54,21 @@ h3 {
     color: #333;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-li {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 10px 0;
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+td {
     padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: left;
 }
 
-li.completed {
-    background-color: #cfc;
-    text-decoration: line-through;
+td:nth-child(3) {
+    text-align: center;
 }
+

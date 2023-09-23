@@ -24,13 +24,48 @@
         </form>
     
         <h3>Tasks:</h3>
-        <ul id="tasks-list">
+        <table id="tasks-list">
             <!-- Task items will be added here dynamically -->
-        </ul>
+        </table>
     </div>
     
     <script>
+        const url = 'http://localhost:8080/api/v1/tasks'
+
+        const table = document.getElementById('tasks-list')
+        const list = document.createDocumentFragment();
         
-    </script>
+        // GET
+        fetch(url)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                let tasks = data;
+
+                tasks.map(function(task) {
+                    let tr = document.createElement('tr');
+                    let title = document.createElement('td');
+                    let description = document.createElement('td');
+                    let status = document.createElement('td')
+
+                    title.innerHTML = `${task.title}`;
+                    description.innerHTML = `${task.description}`;
+                    status.innerHTML = `${task.status}`
+
+                    tr.appendChild(title);
+                    tr.appendChild(description);
+                    tr.appendChild(status)
+
+                    list.appendChild(tr);
+                });
+
+                table.appendChild(list);
+            })
+            .catch(function(error) {`
+                console.log(error);
+            });
+        
+        </script>
 </body>
 </html>
