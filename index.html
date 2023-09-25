@@ -26,46 +26,20 @@
         <h3>Tasks:</h3>
         <table id="tasks-list">
             <!-- Task items will be added here dynamically -->
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
         </table>
     </div>
     
-    <script>
-        const url = 'http://localhost:8080/api/v1/tasks'
-
-        const table = document.getElementById('tasks-list')
-        const list = document.createDocumentFragment();
+    <script src="script.js">
         
-        // GET
-        fetch(url)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                let tasks = data;
-
-                tasks.map(function(task) {
-                    let tr = document.createElement('tr');
-                    let title = document.createElement('td');
-                    let description = document.createElement('td');
-                    let status = document.createElement('td')
-
-                    title.innerHTML = `${task.title}`;
-                    description.innerHTML = `${task.description}`;
-                    status.innerHTML = `${task.status}`
-
-                    tr.appendChild(title);
-                    tr.appendChild(description);
-                    tr.appendChild(status)
-
-                    list.appendChild(tr);
-                });
-
-                table.appendChild(list);
-            })
-            .catch(function(error) {`
-                console.log(error);
-            });
-        
-        </script>
+    </script>
 </body>
 </html>

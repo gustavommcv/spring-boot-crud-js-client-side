@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="task-container">
+        <button onclick="goBack()">Back</button>
+        <h2>Edit Task</h2>
+        <form id="edit-task-form">
+            <input type="hidden" id="task-id">
+            <label for="task-title">Title:</label>
+            <input type="text" id="task-title" required>
+            <label for="task-description">Description:</label>
+            <textarea id="task-description" rows="4" cols="50"></textarea>
+            <label for="task-status">Status:</label>
+            <select id="task-status" name="task-status">
+                <option value="PENDING">Pending</option>
+                <option value="COMPLETED">Completed</option>
+            </select>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <script>
+        const url = 'http://localhost:8080/api/v1/tasks';
+
+        // Function to load and display task details for editing
+        function loadTaskDetails(taskId) {
+            fetch(`${url}/${taskId}`)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((task) => {
+                    // Fill in the form with the task details
+                    document.getElementById('task-id').value = task.id;
+                    document.getElementById('task-title').value = task.title;
+                    document.getElementById('task-description').value = task.description;
+                    document.getElementById('task-status').value = task.status;
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        // Form submission event configuration
+        document.addEventListener('DOMContentLoaded', function () {
+            const editTaskForm = document.getElementById('edit-task-form');
+
+            editTaskForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const taskId = document.getElementById('task-id').value;
+                const taskTitleInput = document.getElementById('task-title').value;
+                const taskDescriptionInput = document.getElementById('task-description').value;
+                const taskStatusInput = document.getElementById('task-status').value;
+
+                const data = {
+                    title: taskTitleInput,
+                    description: taskDescriptionInput,
+                    status: taskStatusInput,
+                };
+
+                let fetchData = {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                    },
+                };
+
+                fetch(`${url}/${taskId}`, fetchData)
+                    .then(function(response) {
+                        if (response.ok) {
+                            console.log('Tarefa atualizada com sucesso!');
+                            
+                            // Redirect back to task list after editing
+                            window.location.href = 'index.html';
+                        } else {
+                            console.error('Erro ao atualizar tarefa:', response.statusText);
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error('Erro ao atualizar tarefa:', error);
+                    });
+            });
+
+            // Load task details when the page initially loads
+            const urlParams = new URLSearchParams(window.location.search);
+            const taskId = urlParams.get('id');
+
+            if (taskId) {
+                loadTaskDetails(taskId);
+            } else {
+                console.error('ID da tarefa não encontrado na URL.');
+            }
+        });
+
+        // Function to return to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
